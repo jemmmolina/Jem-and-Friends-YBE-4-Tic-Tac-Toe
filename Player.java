@@ -1,4 +1,4 @@
-public class PLayer{
-
+public class Player{
+	
 
 }
