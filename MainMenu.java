@@ -1,11 +1,14 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends JPanel{
 	
 	JPanel[] panels = new JPanel[4];
 	JTextField[] textField = new JTextField[3];	
-
+	JButton ok;
+	JButton cancel;	
+	
 	public MainMenu() {
 		super(new FlowLayout());
 
@@ -28,9 +31,26 @@ public class MainMenu extends JPanel {
 			panels[i].add(textField[i]);
 		}		
 	
-		JButton ok = new JButton("OK");
-		JButton cancel = new JButton("CANCEL");
+		ok = new JButton("OK");
+		cancel = new JButton("CANCEL");
 		panels[3].add(ok);
 		panels[3].add(cancel);
+		/**
+		ok.addActionListener(new ActionListener(){   
+			public void actionPerformed(ActionEvent e){
+				CardLayout card = (CardLayout) parent.getLayout();
+				card.show(parent, "Game");
+			}
+		});
+		**/
+		cancel.addActionListener(new ActionListener(){   
+			public void actionPerformed(ActionEvent e){
+				System.exit(1);
+			}
+		});
+	}
+
+	public JButton getOKButton(){
+		return ok;
 	}
 }

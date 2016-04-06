@@ -6,13 +6,14 @@ public class Board extends JFrame{
 	//private final String NAME = "TIC TAC TOE"; 
 	JButton[] buttons = new JButton[9];
 	MainMenu mainMenu = new MainMenu();	
-	
+	final Container container;	
+
 	public Board(){
 		super("Tic-Tac-Toe");
 		this.setPreferredSize(new Dimension(500, 300));
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		Container container =  getContentPane();
+		container =  getContentPane();
 		container.setLayout(new CardLayout());
 
 		//JPanel menu = new JPanel(new GridLayout(2,1));
@@ -51,9 +52,14 @@ public class Board extends JFrame{
 		//menu.add(exitGameButton);
 
 		//container.add(menu, BorderLayout.PAGE_START);
-		
-		container.add(mainMenu);
-		container.add(game);
+		mainMenu.getOKButton().addActionListener(new ActionListener(){   
+			public void actionPerformed(ActionEvent e){
+				CardLayout card = (CardLayout) container.getLayout();
+				card.show(container, "Game");
+			}
+		});
+		container.add(mainMenu, "Menu");
+		container.add(game, "Game");
 		this.pack();
 	}
 
