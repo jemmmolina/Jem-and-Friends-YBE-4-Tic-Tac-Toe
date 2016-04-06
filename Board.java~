@@ -5,16 +5,17 @@ import java.awt.event.*;
 public class Board extends JFrame{
 	//private final String NAME = "TIC TAC TOE"; 
 	JButton[] buttons = new JButton[9];
-		
+	MainMenu mainMenu = new MainMenu();	
+	
 	public Board(){
 		super("Tic-Tac-Toe");
 		this.setPreferredSize(new Dimension(500, 300));
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container container =  getContentPane();
-		container.setLayout(new BorderLayout());
+		container.setLayout(new CardLayout());
 
-		JPanel menu = new JPanel(new GridLayout(2,1));
+		//JPanel menu = new JPanel(new GridLayout(2,1));
 		JPanel game = new JPanel(new GridLayout(3,3));
 
 		JButton newGameButton = new JButton("NEW GAME");
@@ -46,10 +47,12 @@ public class Board extends JFrame{
 			game.add(buttons[i]);
 		}
 		
-		menu.add(newGameButton);
-		menu.add(exitGameButton);
+		//menu.add(newGameButton);
+		//menu.add(exitGameButton);
 
 		//container.add(menu, BorderLayout.PAGE_START);
+		
+		container.add(mainMenu);
 		container.add(game);
 		this.pack();
 	}
