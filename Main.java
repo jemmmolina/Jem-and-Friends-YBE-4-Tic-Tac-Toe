@@ -24,5 +24,37 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Board b = new Board();
+		
+		initGame();
+		
+		do {
+			playerMove(currentPlayer);
+			updateGame(currentPlayer, currentRow, currentCol);
+			printBoard();
+		}
+		
+		public static void printBoard() {
+		for (int row = 0; row < ROWS; ++row) {
+			for (int col = 0; col < COLS; ++col) {
+				printCell(board[row][col]); // print each of the cells
+					if (col != COLS - 1) {
+						System.out.print("|");   // print vertical partition
+					}
+			}
+			System.out.println();
+			if (row != ROWS - 1) {
+				System.out.println("-----------"); // print horizontal partition
+			}
+		}
+		System.out.println();
+		}
+		
+		public static void printCell(int content) {
+			switch (content) {
+				case NONE: System.out.print(" O "); break;
+				case CROSS:  System.out.print(" X "); break;
+				case EMPTY:  System.out.print("   "); break;		
+			}
+		}
 	}
 }
