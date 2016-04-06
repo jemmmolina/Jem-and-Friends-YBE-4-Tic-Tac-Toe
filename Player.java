@@ -15,5 +15,9 @@ public class Player {
 		this.name = name;
 	}
 
+	public void Move(Board b){
+
+	}
+
 }
 
