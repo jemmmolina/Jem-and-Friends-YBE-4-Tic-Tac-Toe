@@ -1,68 +1,69 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+public class Board {
+   public static final int ROWS = 3;
+   public static final int COLS = 3;
+ 
 
-public class Board extends JFrame{
-	//private final String NAME = "TIC TAC TOE"; 
-	JButton[] buttons = new JButton[9];
-	MainMenu mainMenu = new MainMenu();	
-	final Container container;	
+   Cell[][] cells;
+   int currentRow, currentCol;
 
-	public Board(){
-		super("Tic-Tac-Toe");
-		this.setPreferredSize(new Dimension(500, 300));
-		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		container =  getContentPane();
-		container.setLayout(new CardLayout());
+   public Board() {
+      cells = new Cell[ROWS][COLS];
+      for (int row = 0; row < ROWS; ++row) {
+         for (int col = 0; col < COLS; ++col) {
+            cells[row][col] = new Cell(row, col);
+         }
+      }
+   }
+ 
 
-		//JPanel menu = new JPanel(new GridLayout(2,1));
-		JPanel game = new JPanel(new GridLayout(3,3));
+   public void init() {
+      for (int row = 0; row < ROWS; ++row) {
+         for (int col = 0; col < COLS; ++col) {
+            cells[row][col].clear();
+         }
+      }
+   }
+ 
 
-		JButton newGameButton = new JButton("NEW GAME");
-		JButton exitGameButton = new JButton("EXIT");
-		
+   public boolean isDraw() {
+      for (int row = 0; row < ROWS; ++row) {
+         for (int col = 0; col < COLS; ++col) {
+            if (cells[row][col].content == Seed.EMPTY) {
+               return false; // an empty seed found
+            }
+         }
+      }
+      return true; // no empty cell
+   }
+ 
 
+   public boolean hasWon(Seed theSeed) {
+      return (cells[currentRow][0].content == theSeed         // 3-in-the-row
+                   && cells[currentRow][1].content == theSeed
+                   && cells[currentRow][2].content == theSeed
+              || cells[0][currentCol].content == theSeed      // 3-in-the-column
+                   && cells[1][currentCol].content == theSeed
+                   && cells[2][currentCol].content == theSeed
+              || currentRow == currentCol            // 3-in-the-diagonal
+                   && cells[0][0].content == theSeed
+                   && cells[1][1].content == theSeed
+                   && cells[2][2].content == theSeed
+              || currentRow + currentCol == 2    // 3-in-the-opposite-diagonal
+                   && cells[0][2].content == theSeed
+                   && cells[1][1].content == theSeed
+                   && cells[2][0].content == theSeed);
+   }
 
-		for(int i=0;i<9;i++){
-			buttons[i] = new JButton(Integer.toString(i));
-				
-			buttons[i].addMouseListener(new MouseListener(){   
-  				public void mouseClicked(MouseEvent e){
-  				}
-  				public void mouseEntered(MouseEvent e){
-    				//this.setForeground(Color.CYAN);
-					System.out.println("LOL");  				
-				}
-  				public void mouseExited(MouseEvent e){
-    				//this.setForeground(Color.RED);
-					System.out.println("LOL");  
-  				}
-  				public void mousePressed(MouseEvent e){
-   					//this.setForeground(Color.BLUE);
-					System.out.println("LOL");    				
-				}
-  				public void mouseReleased(MouseEvent e){
-  				}
-			});
-			game.add(buttons[i]);
-		}
-		
-		//menu.add(newGameButton);
-		//menu.add(exitGameButton);
-
-		//container.add(menu, BorderLayout.PAGE_START);
-		mainMenu.getOKButton().addActionListener(new ActionListener(){   
-			public void actionPerformed(ActionEvent e){
-				CardLayout card = (CardLayout) container.getLayout();
-				card.show(container, "Game");
-			}
-		});
-		container.add(mainMenu, "Menu");
-		container.add(game, "Game");
-		this.pack();
-	}
-
-	//public set
-		
+   public void paint() {
+      for (int row = 0; row < ROWS; ++row) {
+         for (int col = 0; col < COLS; ++col) {
+            cells[row][col].paint();   // each cell paints itself
+            if (col < COLS - 1) System.out.print("|");
+         }
+         System.out.println();
+         if (row < ROWS - 1) {
+            System.out.println("-----------");
+         }
+      }
+   }
 }
