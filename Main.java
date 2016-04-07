@@ -7,7 +7,7 @@ public class Main {
  
    private static Scanner in = new Scanner(System.in);
 
-   public GameMain() {
+   public Main() {			//solved GameMain error to Main
       board = new Board();
  
       initGame();
