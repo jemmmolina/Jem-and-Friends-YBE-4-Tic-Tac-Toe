@@ -8,7 +8,7 @@ public class Frame extends JFrame{
 	MainMenu mainMenu = new MainMenu();	
 	final Container container;	
 
-	public Board(){
+	public Frame(){
 		super("Tic-Tac-Toe");
 		this.setPreferredSize(new Dimension(500, 300));
 		this.setVisible(true);
