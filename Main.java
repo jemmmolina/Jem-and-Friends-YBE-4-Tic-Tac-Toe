@@ -8,7 +8,7 @@ public class Main {
 	public static final int PLAYING = 0;
 	public static final int DRAW = 1;
 	public static final int CROSS_WON = 2;
-	public static final int NOUGHT_WON = 3;
+	public static final int NONE_WON = 3;
  
 	public static int currentState = PLAYING;
 	
@@ -33,20 +33,20 @@ public class Main {
 			System.out.println("It's a draw! Game over!");
 			}
  
-			currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+			currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NONE : Seed.CROSS;
 		} while (currentState == GameState.PLAYING);
 	}
 	
 
 	public enum GameState {
-		PLAYING, DRAW, CROSS_WON, NOUGHT_WON
+		PLAYING, DRAW, CROSS_WON, NONE_WON
 	}
 	
 	private GameState currentState;
 	currentState = GameState.PLAYING;
 
 	public enum Seed { // to save as "Seed.java"
-		EMPTY, CROSS, NOUGHT
+		EMPTY, CROSS, NONE
 	}
 	
 	private Seed currentPlayer;
@@ -87,7 +87,7 @@ public class Main {
 
 	public void updateGame(Seed theSeed) {
 		if (board.hasWon(theSeed)) {
-			currentState = (theSeed == Seed.CROSS) ? GameState.CROSS_WON : GameState.NOUGHT_WON;
+			currentState = (theSeed == Seed.CROSS) ? GameState.CROSS_WON : GameState.NONE_WON;
 		} else if (board.isDraw()) {
 			currentState = GameState.DRAW;
 		}
