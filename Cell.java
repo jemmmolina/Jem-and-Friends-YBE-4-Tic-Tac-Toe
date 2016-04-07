@@ -3,6 +3,10 @@
 public class Cell {  // save as Cell.java
    Seed content; // content of this cell of type Seed.
    int row, col;
+
+   public static final int EMPTY = 0;
+   public static final int CIRCLE = 1;
+   public static final int CROSS = 2;
  
    public Cell(int row, int col) {
       this.row = row;
@@ -17,7 +21,7 @@ public class Cell {  // save as Cell.java
    
 	public void paint() {
 		switch (content) {
-			case NONE: System.out.print(" O "); break;
+			case CIRCLE: System.out.print(" O "); break;
 			case CROSS:  System.out.print(" X "); break;
 			case EMPTY:  System.out.print("   "); break;
 		}
