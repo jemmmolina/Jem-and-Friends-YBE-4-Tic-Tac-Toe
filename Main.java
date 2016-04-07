@@ -2,15 +2,18 @@ import java.util.Scanner;
 
 public class Main {
 	private Board board;
-	private GameState currentState;
-	private Seed currentPlayer;
 
 	public static final int PLAYING = 0;
 	public static final int DRAW = 1;
 	public static final int CROSS_WON = 2;
 	public static final int NONE_WON = 3;
  
-	public static int currentState = PLAYING;
+		
+	private GameState currentState = GameState.PLAYING;
+	
+	private Seed currentPlayer = Seed.CROSS;
+ 
+	private Seed content = Seed.EMPTY;
 	
 	private static Scanner in = new Scanner(System.in);
 	
@@ -41,12 +44,6 @@ public class Main {
 	public enum GameState {
 		PLAYING, DRAW, CROSS_WON, NONE_WON
 	}
-	
-	private GameState currentState = GameState.PLAYING;
-	
-	private Seed currentPlayer = Seed.CROSS;
- 
-	private Seed content = Seed.EMPTY;
 
 	public void initGame() {
 		board.init();
