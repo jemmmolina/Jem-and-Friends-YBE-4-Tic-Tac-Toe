@@ -21,7 +21,7 @@ public class Cell {  // save as Cell.java
    
 	public void paint() {
 		switch (content) {
-			case CIRCLE: System.out.print(" O "); break;
+			case NONE: System.out.print(" O "); break;
 			case CROSS:  System.out.print(" X "); break;
 			case EMPTY:  System.out.print("   "); break;
 		}
