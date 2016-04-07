@@ -42,18 +42,11 @@ public class Main {
 		PLAYING, DRAW, CROSS_WON, NONE_WON
 	}
 	
-	private GameState currentState;
-	currentState = GameState.PLAYING;
-
-	public enum Seed { // to save as "Seed.java"
-		EMPTY, CROSS, NONE
-	}
+	private GameState currentState = GameState.PLAYING;
 	
-	private Seed currentPlayer;
-	currentPlayer = Seed.CROSS;
+	private Seed currentPlayer = Seed.CROSS;
  
-	private Seed content;
-	content = Seed.EMPTY;
+	private Seed content = Seed.EMPTY;
 
 	public void initGame() {
 		board.init();
