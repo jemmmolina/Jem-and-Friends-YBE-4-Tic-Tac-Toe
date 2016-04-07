@@ -13,7 +13,7 @@ public class MainMenu extends JPanel{
 		super(new FlowLayout());
 
 		for(int i=0;i<4;i++){
-			panels[i] = new JPanel(new GridLayout(1,2));
+			panels[i] = new JPanel(new FlowLayout());
 			panels[i].setPreferredSize(new Dimension(300, 50));
 			this.add(panels[i]);
 		}	
@@ -27,7 +27,7 @@ public class MainMenu extends JPanel{
 		panels[2].add(label3);
 	
 		for(int i = 0;i<3;i++){
-			textField[i] = new JTextField();
+			textField[i] = new JTextField(10);
 			panels[i].add(textField[i]);
 		}		
 	
