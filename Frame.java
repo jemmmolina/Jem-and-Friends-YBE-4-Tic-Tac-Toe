@@ -15,15 +15,18 @@ public class Frame extends JFrame{
 		container =  getContentPane();
 		container.setLayout(new CardLayout());
 
-		mainMenu.getOKButton().addActionListener(new ActionListener(){   
+		mainMenu.getOKButton().addActionListener(new ActionListener(){  
+			@Override 
 			public void actionPerformed(ActionEvent e){
 				CardLayout card = (CardLayout) container.getLayout();
 				card.show(container, "Game");
+				game.setState(mainMenu.getPlayer1Name(), mainMenu.getPlayer2Name(), mainMenu.getRounds());
+				
 			}
 		});
 		container.add(mainMenu, "Menu");
 		container.add(game, "Game");
 		this.pack();
 	}
-		
+			
 }

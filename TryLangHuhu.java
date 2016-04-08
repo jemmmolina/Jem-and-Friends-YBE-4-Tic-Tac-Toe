@@ -11,6 +11,7 @@ public class TryLangHuhu {
 	public TryLangHuhu() {
 		board = new char[ROWS][COLS];
 		initBoard();
+		showBoard();
 	}
 
 	public static void initBoard() {
@@ -94,7 +95,7 @@ public class TryLangHuhu {
    	public static void main(String[] args) {
    		
    		Scanner sc = new Scanner(System.in);
-
+   		TryLangHuhu t = new TryLangHuhu();
    		//initBoard();
 
    		//do {

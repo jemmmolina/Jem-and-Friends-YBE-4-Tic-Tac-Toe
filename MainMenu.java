@@ -35,14 +35,6 @@ public class MainMenu extends JPanel{
 		cancel = new JButton("CANCEL");
 		panels[3].add(ok);
 		panels[3].add(cancel);
-		/**
-		ok.addActionListener(new ActionListener(){   
-			public void actionPerformed(ActionEvent e){
-				CardLayout card = (CardLayout) parent.getLayout();
-				card.show(parent, "Game");
-			}
-		});
-		**/
 		cancel.addActionListener(new ActionListener(){   
 			public void actionPerformed(ActionEvent e){
 				System.exit(1);
@@ -52,5 +44,17 @@ public class MainMenu extends JPanel{
 
 	public JButton getOKButton(){
 		return ok;
+	}
+
+	public String getPlayer1Name(){
+		return textField[0].getText();
+	}
+
+	public String getPlayer2Name(){	
+		return textField[1].getText();
+	}
+
+	public String getRounds(){
+		return textField[2].getText();
 	}
 }
