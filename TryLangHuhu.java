@@ -45,14 +45,21 @@ public class TryLangHuhu {
    	}
  
 
-   	public static boolean hasWinner() {
+   	private static boolean hasWinner() {
 
-   		for (int i=0; i<3; i++) {
-   			if ((hasThree(board[i][0], board[i][1], board[i][2]))
-   				|| (hasThree(board[0][i], board[1][i], board[2][i]))
-   				|| (hasThree(board[0][0], board[1][1], board[2][2])))
-   					return true;
+   		for (int row=0; row<ROWS; row++) {
+   			if (hasThree(board[row][0], board[row][1], board[row][2]))   				
+   				return true;
    		}
+
+   		for (int col=0; col<COLS; col++) {
+   			if (hasThree(board[0][col], board[1][col], board[2][col]))
+   				return true;
+   		}
+
+   		if (hasThree(board[0][0], board[1][1], board[2][2]))
+   			return true;
+
    		return false;
    	}
 
