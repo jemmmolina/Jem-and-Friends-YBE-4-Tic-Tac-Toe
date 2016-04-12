@@ -1,7 +1,6 @@
 public class Main{
 	public static void main(String[] args){
 		Frame g = new Frame();
-		//new Thread(f).start();
 		final Frame f = g;
 		Thread t = new Thread(){
 			@Override

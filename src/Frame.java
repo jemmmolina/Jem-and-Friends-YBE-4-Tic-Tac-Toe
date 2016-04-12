@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Frame extends JFrame{
+public class Frame extends JFrame{			//executes JFrame class
 	MainMenu mainMenu = new MainMenu();	
 	Game game = new Game();
-	final Container container;	
+	final Container container;				//sets container for tic tac toe main file
 
-	public Frame(){
-		super("Tic-Tac-Toe");
+	public Frame(){							//Frame
+		super("Tic-Tac-Toe");								//calls tic tac toe for super
 		this.setPreferredSize(new Dimension(500, 300));
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -16,7 +16,7 @@ public class Frame extends JFrame{
 		container.setLayout(new CardLayout());
 
 		mainMenu.getOKButton().addActionListener(new ActionListener(){  
-			@Override 
+			@Override 						//overrides action performance for action events
 			public void actionPerformed(ActionEvent e){
 				CardLayout card = (CardLayout) container.getLayout();
 				card.show(container, "Game");
@@ -24,9 +24,17 @@ public class Frame extends JFrame{
 				
 			}
 		});
-		container.add(mainMenu, "Menu");
-		container.add(game, "Game");
+		container.add(mainMenu, "Menu");	//calls menu for container
+		container.add(game, "Game");		//calls game for container
 		this.pack();
 	}
-			
+	public void checkHorizontal(){
+		game.checkHorizontal();
+	}
+	public void checkVertical(){
+		game.checkVertical();
+	}
+	public void checkDiagonal(){
+		game.checkDiagonal();
+	}
 }

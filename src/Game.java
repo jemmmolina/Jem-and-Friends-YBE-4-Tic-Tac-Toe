@@ -11,11 +11,13 @@ public class Game extends JPanel{
 	private int rounds;
 	private int currentRound;	
 	private String prevPlayer;
-	private String prevPlayerSymbol = "X";
+	private String currPlayer;
+	private String currPlayerSymbol = "X";
 	private String p1Symbol = "X";
 	private String p2Symbol = "O";
 	private int p1GamesWon = 0;
 	private int p2GamesWon = 0;
+	private boolean gameEnd = false;
 	
 	
 	private JLabel turnNumberText;
@@ -39,10 +41,9 @@ public class Game extends JPanel{
 				buttons[i][j].addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						buttons[x][y].setText(currPlayerSymbol);
+						buttons[x][y].setEnabled(false);								
 						repaint();
-						buttons[x][y].setText(prevPlayerSymbol);
-						buttons[x][y].setEnabled(false);
-						checkWinner(buttons, prevPlayer);		
 						setTurnNumber();
 					}
 				});
@@ -71,65 +72,95 @@ public class Game extends JPanel{
 	}
 
 	public int getTurnNumber(){
+	/*******************************************
+		Returns the turn number
+	*******************************************/
 		return this.turnNumber;
 	}
 	public void setTurnNumber(){
+	/*******************************************
+		Updates the turn number and set the next player to move
+	*******************************************/
 		this.turnNumber += 1;
 		turnNumberText.setText("Turn Number: " + String.valueOf(this.turnNumber +1));
-		if(prevPlayer == p1Name){
+		if(currPlayer == p1Name){
 			turnPlayerText.setText(p2Name);
-			prevPlayer = p2Name;
-			prevPlayerSymbol = p2Symbol;
+			prevPlayer = p1Name;
+			currPlayer = p2Name;
+			currPlayerSymbol = p2Symbol;
 		}else{
 			turnPlayerText.setText(p1Name);
-			prevPlayer = p1Name;
-			prevPlayerSymbol = p1Symbol;
+			prevPlayer = p2Name;
+			currPlayer = p1Name;
+			currPlayerSymbol = p1Symbol;
 		}
 	}
-	public boolean checkWinner(JButton[][] buttons, String player){
+
+	public void checkH(JButton[][] buttons, String player){
    		for (int row=0; row<3; row++) {
    			if (hasThree(buttons[row][0].getText(), buttons[row][1].getText(), buttons[row][2].getText())){ 				
 				//call reset here  
 				resetGame(player); 				
-				return true;
 			}
-   		}
-
+   		}		
+	}
+	public void checkV(JButton[][] buttons, String player){
    		for (int col=0; col<3; col++) {
    			if (hasThree(buttons[0][col].getText(), buttons[1][col].getText(), buttons[2][col].getText())){
    				//call reset
 				resetGame(player); 	
-				return true;
 			}
-   		}
-
+   		}		
+	}
+	public void checkD(JButton[][] buttons, String player){
+		int flag = 0;
    		if (hasThree(buttons[0][0].getText(), buttons[1][1].getText(), buttons[2][2].getText())){
 			//call reset  
 			resetGame(player); 	 			
-			return true;
 		}
-
-   		return false;
+ 		if (hasThree(buttons[2][0].getText(), buttons[1][1].getText(), buttons[0][2].getText())){
+			//call reset  
+			resetGame(player); 	 			
+		}
+		for(int row = 0; row<3;row++){
+			for(int col = 0; col<3; col++){
+				if(buttons[row][col].getText() == ""){
+					flag = 1;					
+					break;
+				}
+			}
+		}
+		if(flag == 0)
+			resetGame("DRAW");		
 	}
+
+
 	private boolean hasThree(String s1, String s2, String s3) {
-		System.out.print(s1);
-		System.out.print(s2);
-		System.out.println(s3);
+	/*******************************************
+		Checks if three given buttons is equal
+	*******************************************/
         if ((s1 != "") && (s1 == s2) && (s2 == s3))
 			return true;
 		else return false;
     }
 
 	public void setWinner(int x){
+	/*******************************************
+		Sets the winner
+	*******************************************/
 		this.winner = x;
 	}
 	
 	public void setState(String p1Name, String p2Name, String rounds){
+	/*******************************************
+		Sets the initial state of the game.
+	*******************************************/
 		this.p1Name = p1Name;
-		this.prevPlayer = p1Name;
-		turnPlayerText.setText(prevPlayer);
-		player1Name.setText(this.p1Name + ": " + Integer.toString(p1GamesWon));
 		this.p2Name = p2Name;
+		this.prevPlayer = p2Name;
+		this.currPlayer = p1Name;
+		turnPlayerText.setText(currPlayer);
+		player1Name.setText(this.p1Name + ": " + Integer.toString(p1GamesWon));
 		player2Name.setText(this.p2Name + ": " + Integer.toString(p2GamesWon));
 		this.rounds = Integer.parseInt(rounds);
 		this.currentRound = 1;
@@ -137,6 +168,9 @@ public class Game extends JPanel{
 	}
 
 	public void resetGame(String winner){
+	/*******************************************
+		Resets the game for a new round
+	*******************************************/
 		declareWinner(winner);
 		if(p1GamesWon < rounds/2 + 1 && p2GamesWon < rounds/2 + 1){
 			for(int i=0;i<3;i++){
@@ -145,27 +179,66 @@ public class Game extends JPanel{
 					this.buttons[i][j].setEnabled(true);
 				}
 			}
-			turnNumber = -1;
-			currentRound += 1;
+			if(winner != "DRAW")
+				currentRound += 1;
+			turnNumber = 0;
 			gameNumber.setText("Game " + Integer.toString(this.currentRound) + " out of " + Integer.toString(this.rounds));
 			turnNumberText.setText("Turn Number: 1");
-			
+			this.winner = 0;
+			if(currentRound%2 == 0){
+				currPlayerSymbol = p2Symbol;
+				currPlayer = p2Name;
+				prevPlayer = p1Name;
+			}else{
+				currPlayerSymbol = p1Symbol;
+				currPlayer = p1Name;
+				prevPlayer = p2Name;
+			}
 		}else{
+			gameEnd = true;
 			System.exit(1);
 		}
 	}
 	
 	public void declareWinner(String player){
-		if(player == p1Name){
-			p1GamesWon +=1;
-			player1Name.setText(this.p1Name + ": " + Integer.toString(p1GamesWon));
-		}else{
-			p2GamesWon +=1;
-			player2Name.setText(this.p2Name + ": " + Integer.toString(p2GamesWon));
-		}
+	/*******************************************
+		Declares the winner of the round
+	*******************************************/
 		JFrame frame = new JFrame();
 		frame.setSize(300,300);
 		frame.setVisible(false);
-		JOptionPane.showMessageDialog( frame , player + " has won!");
+		if(player == "DRAW"){
+			JOptionPane.showMessageDialog(frame , "It is a draw!");
+		}else{ 
+			if(player == p1Name){
+				this.winner = 1;
+				p1GamesWon +=1;
+				player1Name.setText(this.p1Name + ": " + Integer.toString(p1GamesWon));
+			}else{
+				this.winner = 2;
+				p2GamesWon +=1;
+				player2Name.setText(this.p2Name + ": " + Integer.toString(p2GamesWon));
+			}
+			JOptionPane.showMessageDialog(frame , player + " has won!");
+		}
+	}
+	
+	public void checkHorizontal(){
+		while(!gameEnd){
+			System.out.print("");
+			checkH(buttons, currPlayer);
+		}
+	}
+	public void checkVertical(){
+		while(!gameEnd){
+			System.out.print("");	
+			checkV(buttons, currPlayer);
+		}
+	}
+	public void checkDiagonal(){
+		while(!gameEnd){	
+			System.out.print("");
+			checkD(buttons, currPlayer);
+		}
 	}
 }
