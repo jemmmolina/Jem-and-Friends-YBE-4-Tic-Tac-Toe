@@ -1,9 +1,0 @@
-public class Checker{
-	private Frame f;
-	public Checker(Frame f){
-		this.f = f;
-	}
-	
-	
-
-}
